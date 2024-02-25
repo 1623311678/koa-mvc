@@ -1,25 +1,36 @@
 const router = require('koa-router')()
 const HomeController = require('./controller/home')
-const CustomerController = require('./controller/customer')
+const AssetController = require('./controller/asset')
+
+const UserController = require('./controller/user')
 
 module.exports = (app) => {
-  router.get( '/', HomeController.index )
-  router.get('/home', HomeController.home)
-  // http://localhost:3000/home/1/dahlin
-  router.get('/home/:id/:name', HomeController.homeParams)
-  router.get('/user', HomeController.login)
-  router.post('/user/register', HomeController.register)
-  router.get('/customer',CustomerController.getAllCustomers)
-  router.get('/customer/:id', CustomerController.getCustomerById)
-  // http://localhost:3000/customer/name/dahlin
-  router.get('/customer/name/:name', CustomerController.getCustomerByName)
-  // 增加数据方法
-  router.post('/customer', CustomerController.createCustomer)
-  // 修改数据方法
-  router.put('/customer/:id', CustomerController.updateCustomer)
-  // 删除数据方法
-  router.delete('/customer/:id', CustomerController.deleteCustomer)
+  router.get('/', HomeController.index)
+  /* 用户注册、登陆、验证
+   * 从这里开始才是真代码
+   * 
+   */
+  // 注册
+  router.post('/api/user/register', UserController.register)
+  // 登陆
+  router.post('/api/user/login', UserController.login),
+  // 用户列表
+  router.post('/api/user/list', UserController.getUserList),
+  // 添加用户
+  router.post('/api/user/add', UserController.addUser),
+   // 更新用户
+   router.post('/api/user/update', UserController.updateUser),
+   // 删除用户
+   router.post('/api/user/delete', UserController.deleteUser),
+  // 获取用户详细信息，包含资产
+  router.post('/api/user/detail-and-assets',UserController.getUserWithAssets)
 
-  app.use(router.routes())
-     .use(router.allowedMethods())
+  /* 资产配置模块 */
+  // 创建资产
+  router.post('/api/asset/create',AssetController.createAsset)
+  //资产列表
+  router.post('/api/asset/list',AssetController.getAssetList)
+
+    app.use(router.routes())
+      .use(router.allowedMethods())
 }

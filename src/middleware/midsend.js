@@ -1,3 +1,5 @@
+
+
 module.exports = () => {
     function render(json) {
         this.set("Content-Type", "application/json")
@@ -7,4 +9,4 @@ module.exports = () => {
         ctx.send = render.bind(ctx)
         await next()
     }
-  }
+}

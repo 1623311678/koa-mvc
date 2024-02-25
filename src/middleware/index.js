@@ -5,6 +5,7 @@ const bodyParser = require('koa-bodyparser')
 
 const miSend = require('./midsend')
 const logger = require('./logger')
+const verifyToken = require('./verifyToken')
 module.exports = (app) => {
 //   app.use(staticFiles(path.resolve(__dirname, "../public")))
 //   app.use(nunjucks({
@@ -18,6 +19,7 @@ module.exports = (app) => {
   app.use(bodyParser())
   app.use(logger())
   app.use(miSend())
+  app.use(verifyToken())
   
   // 最后拦截异常信息
   app.use(async (ctx,next) =>{

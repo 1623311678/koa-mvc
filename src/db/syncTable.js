@@ -1,24 +1,19 @@
-const sequenlizeConn = require('./dbConn.js');
-var customer = require('./models/customer');
-sequenlizeConn.authenticate().then(() => {
-    console.log('Connection has been established successfully.');
-    // 同步表结构
-    customer.sync({
-        force: true  // 强制同步，先删除表，然后新建
-    }).then(()=>{
-    	// 添加一条基础数据
-        return customer.create({
-            name:'dahlin',
-            sex:'男',
-            email:'dahlinsky@qq.com',
-            phone:'13588888888',
-            country: '中国',
-            city:"北京",
-            address:'卢沟桥'
-        });
-    });
-  })
-  .catch(err => {
-    console.error('Unable to connect to the database:', err);
-  });
 
+const sequenlizeConn = require('./dbConn.js');
+
+
+sequenlizeConn.authenticate()
+    .then(() => {
+        console.log('数据库链接成功.');
+        // 继续同步 asset 表
+        sequenlizeConn.sync({alert:true}).then(()=>{
+            console.log('表结构同步成功')
+        }).catch(err => {
+            console.error('表结构同步失败:', err);
+        });;
+        // 加载模型并设置关联关系
+        // const { setUserAssociations } = require('./models/user');
+        // setUserAssociations();
+    }).catch(err => {
+        console.error('数据库链接错误:', err);
+    });

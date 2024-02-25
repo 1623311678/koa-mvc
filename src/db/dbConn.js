@@ -4,8 +4,8 @@ var Sequelize = require('sequelize');
 var sqlConfig = {
     host: "127.0.0.1",
     user: "root",
-    password: "123456",
-    database: "menagerie"
+    password: "password",
+    database: "CRM"
 };
 
 var sequelize = new Sequelize(sqlConfig.database, sqlConfig.user, sqlConfig.password, {
