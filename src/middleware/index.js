@@ -18,7 +18,7 @@ module.exports = (app) => {
 
   app.use(bodyParser())
   app.use(logger())
-  app.use(miSend())
+  // app.use(miSend())
   app.use(verifyToken())
   
   // 最后拦截异常信息
